@@ -13,13 +13,15 @@ def qr(request):
     adSet = request.GET.get('adSet') #adset name
     ad = request.GET.get('ad') #ad creative
     adv = request.GET.get('adv') #adv name
+    ll = request.GET.get('ll')
+
 
     cookie = checkcookie(request) #check  cookie
     if(cookie == None):
         max_age = 1 * 60
         expires = datetime.datetime.strftime(datetime.datetime.utcnow() + datetime.timedelta(seconds=max_age),
                                              "%a, %d-%b-%Y %H:%M:%S GMT")
-        image_data = generateimg(campaign, adSet, ad, adv)
+        image_data = generateimg(campaign, adSet, ad, adv, ll)
         response = HttpResponse(image_data, content_type="image/png")
         response.set_cookie('macaw', 'Arpith', max_age=max_age, expires=expires)
         return response
@@ -74,8 +76,8 @@ def checkcookie(request):
         return value
 
 
-def generateimg(campaign,adSet,ad,adv):
-    my_QR = QR(data=u'campaign=' + campaign + ' adSet=' + adSet + ' ad=' + ad +' adv='+adv, pixel_size=20)
+def generateimg(campaign,adSet,ad,adv,ll):
+    my_QR = QR(data=u'campaign=' + campaign + ' adSet=' + adSet + ' ad=' + ad +' adv='+adv+' ll='+ll, pixel_size=20)
     my_QR.encode()
     print my_QR.filename
     image_data = open(my_QR.filename, mode='r').read()
