@@ -16,11 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from macaw import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^qr/', views.qr, name='qr'),
     url(r'^mxcnt/', views.mxcnt, name='mxcnt'),
-    url(r'^registration/', views.registration, name='registration'),
+    url(r'^registration/', views.registration, name='registration')
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

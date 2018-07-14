@@ -10,6 +10,7 @@ class savemxevents(models.Model):
     time = models.CharField(max_length=200)
     m2 = models.IntegerField(default=0)
     m3 = models.IntegerField(default=0)
+    uuid = models.CharField(max_length=200)
 
 class registration(models.Model):
     login = models.CharField(max_length=200)
